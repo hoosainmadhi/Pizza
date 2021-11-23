@@ -40,6 +40,28 @@
                 <mxCell id="2" value="&lt;div style=&quot;color: rgb(167 , 219 , 247) ; background-color: rgb(1 , 22 , 39) ; font-family: &amp;#34;jetbrains mono&amp;#34; , &amp;#34;droid sans mono&amp;#34; , monospace , monospace , &amp;#34;droid sans fallback&amp;#34; ; font-size: 16px ; line-height: 22px&quot;&gt;&lt;div&gt;&lt;span style=&quot;color: #00bff9&quot;&gt;data&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;Order&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #82aaff&quot;&gt;Order&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;{&amp;nbsp;&amp;nbsp;&lt;span style=&quot;color: #a4ceee&quot;&gt;customer&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;::&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;Customer&lt;/span&gt;,&lt;/div&gt;&lt;div&gt;    &lt;span style=&quot;color: #a4ceee&quot;&gt;&amp;nbsp; &amp;nbsp; pizzas&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;::&lt;/span&gt; [&lt;span style=&quot;color: #00bff9&quot;&gt;BaseProduct&lt;/span&gt;]&lt;/div&gt;&lt;div&gt;&amp;nbsp;}&lt;/div&gt;&lt;div&gt;  &lt;span style=&quot;color: #00bff9&quot;&gt;deriving&lt;/span&gt; (&lt;span style=&quot;color: #00bff9&quot;&gt;Show&lt;/span&gt;)&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
                     <mxGeometry x="160" y="470" width="270" height="110" as="geometry"/>
                 </mxCell>
+                <mxCell id="4" style="edgeStyle=none;html=1;" edge="1" parent="1" source="3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="490" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="270" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="590" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="1 . Create Empty Order&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="490" y="620" width="140" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Quit" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="620" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;div style=&quot;background-color: rgb(1 , 22 , 39) ; line-height: 22px&quot;&gt;&lt;br&gt;&lt;div style=&quot;color: rgb(167 , 219 , 247) ; font-family: &amp;quot;jetbrains mono&amp;quot; , &amp;quot;droid sans mono&amp;quot; , monospace , monospace , &amp;quot;droid sans fallback&amp;quot; ; font-size: 16px&quot;&gt;&lt;span style=&quot;color: #87aff4&quot;&gt;createEmptyOrder&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;::&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;Order&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(167 , 219 , 247) ; font-family: &amp;quot;jetbrains mono&amp;quot; , &amp;quot;droid sans mono&amp;quot; , monospace , monospace , &amp;quot;droid sans fallback&amp;quot; ; font-size: 16px&quot;&gt;createEmptyOrder &lt;span style=&quot;color: #00bff9&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #82aaff&quot;&gt;Order&lt;/span&gt; {&lt;span style=&quot;color: #a4ceee&quot;&gt;customer&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;=&lt;/span&gt; (&lt;span style=&quot;color: #82aaff&quot;&gt;Customer&lt;/span&gt; &lt;span style=&quot;color: #6bff81&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #d3eed6&quot;&gt;no name&lt;/span&gt;&lt;span style=&quot;color: #6bff81&quot;&gt;&quot;&lt;/span&gt;), &lt;span style=&quot;color: #a4ceee&quot;&gt;pizzas&lt;/span&gt; &lt;span style=&quot;color: #00bff9&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #92b6f4&quot;&gt;[]&lt;/span&gt;}&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#a7dbf7&quot; face=&quot;JetBrains Mono, Droid Sans Mono, monospace, monospace, Droid Sans Fallback&quot;&gt;&lt;span style=&quot;font-size: 16px&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="640" y="585" width="700" height="90" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
