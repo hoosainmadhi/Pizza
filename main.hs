@@ -1,4 +1,3 @@
-import Graphics.UI.GLUT (exit)
 import Pizza (BaseProduct)
 import System.IO
 
@@ -17,11 +16,16 @@ createEmptyOrder = Order {customer = (Customer "no name"), pizzas = []}
 --  MAIN
 ---------------
 
+main :: IO ()
 main = do
   putStrLn "\n --- MAIN ---"
   putStrLn "1- New Order\n q - Quit"
   line <- getLine
   case line of
     "1" -> do
-      print "New Order"
-    _ -> print "quitting.."
+      let order = createEmptyOrder
+      main
+    _ -> exit
+
+exit :: IO ()
+exit = do putStrLn "exited"
