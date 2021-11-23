@@ -24,15 +24,17 @@ main = do
   case line of
     "1" -> do
       let order = createEmptyOrder
-      finishedOrder <- builderOrder order
+      finishedOrder <- buildOrder order
+      print finishedOrder
+      main
 
 
       main
     _ -> exit
 
----------------
---  MAIN
----------------
+------------------
+--  exit :: IO ()
+------------------
 
 exit :: IO ()
 exit = do putStrLn "exiting Pizza POS"
@@ -41,15 +43,18 @@ exit = do putStrLn "exiting Pizza POS"
 --  buildOrder
 ---------------
 
-builderOrder orderIn = do
+buildOrder :: Order -> IO Order
+buildOrder orderIn = do
   putStrLn "\n Build Order"
   putStrLn "1 - New Pizza\n2 - Customer\n r - Return"
   line <- getLine 
   case line of 
     "1" -> do
       putStrLn "Cools lets make your Pizza"
-      
-    "2" -> do
-      putStrLn "I see you are new"
+      let order = orderIn
+      buildOrder order
+
+    -- "2" -> do
+    --   putStrLn "I see you are new"
     "r" -> return orderIn
     _   -> return orderIn
