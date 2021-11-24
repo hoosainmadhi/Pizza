@@ -41,7 +41,7 @@ main = do
       -- 4. Breadsticks
       -- 5. SoftDrinks
       let order = emptyOrder
-      finishedOrder <- buildOrder order
+      finishedOrder <- buildOrder menuItem order
       putStrLn "Items Order \n"
       print (items finishedOrder)
       putStrLn "No of Items\n"
@@ -78,15 +78,15 @@ addPizzaToOrder order item =
 -- start with empty list (anEmptyOrder)
 ---------------
 
-buildOrder :: Order -> IO Order
-buildOrder orderIn = do
+buildOrder :: BaseProduct -> Order -> IO Order
+buildOrder menuItem orderIn = do
   putStrLn "\n Build Order"
   putStrLn "1 - Add Pizza To Order\n2 - Customer\n r - Return"
   line <- getLine
   case line of
     "1" -> do
-      let order = addPizzaToOrder orderIn superPizza
-      buildOrder order
+      let order = addPizzaToOrder orderIn menuItem
+      buildOrder menuItem order 
     -- "2" -> do
     --   putStrLn "I see you are new"
     "r" -> return orderIn
