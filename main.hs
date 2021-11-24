@@ -9,9 +9,10 @@ data Order = Order
   }
   deriving (Show)
 
-anEmptyOrder :: Order
-anEmptyOrder = Order {customer = Customer "no name", items = []}
+emptyOrder :: Order
+emptyOrder = Order {customer = Customer "no name", items = []}
 
+-- Menu Offerings
 basicPizza :: BaseProduct
 basicPizza = Pizza {crustSize = Medium, crustType = Thin, toppings = [Cheese]}
 
@@ -32,20 +33,20 @@ main = do
   line <- getLine
   case line of
     "1" -> do
-      displayMenu
-      -- run function that will display the menu:
+      menuItem <- displayMenu -- run function that will display the menu:
+      print menuItem
       -- 1. Basic Pizza
       -- 2. Super Pizza
       -- 3. Supreme Pizza
       -- 4. Breadsticks
       -- 5. SoftDrinks
-      -- let order = anEmptyOrder
-      -- finishedOrder <- buildOrder order
-      -- putStrLn "Items Order \n"
-      -- print (items finishedOrder)
-      -- putStrLn "No of Items\n"
-      -- print (length (items finishedOrder))
-      -- print finishedOrder
+      let order = emptyOrder
+      finishedOrder <- buildOrder order
+      putStrLn "Items Order \n"
+      print (items finishedOrder)
+      putStrLn "No of Items\n"
+      print (length (items finishedOrder))
+      print finishedOrder
       main
     _ -> exit
 
@@ -85,26 +86,27 @@ buildOrder orderIn = do
   case line of
     "1" -> do
       let order = addPizzaToOrder orderIn superPizza
-
       buildOrder order
     -- "2" -> do
     --   putStrLn "I see you are new"
     "r" -> return orderIn
     _ -> return orderIn
 
--- displayMenu :: IO BaseProduct
-displayMenu :: IO ()
+displayMenu :: IO BaseProduct 
 displayMenu = do
   putStrLn "\n Menu"
   putStrLn "1 - Basic\n2 - Super\n 3 - Supreme\nr - Return"
   line <- getLine
   case line of
     "1" -> do
-      print basicPizza
+      -- print basicPizza
+      return  basicPizza
     "2" -> do
-      print superPizza
+      -- print superPizza
+      return superPizza
     "3" -> do
-      print supremePizza
+      -- print supremePizza
+      return supremePizza
     "r" -> do
       displayMenu
-    _ -> mainMenu
+    _ -> displayMenu
