@@ -23,6 +23,6 @@ pizza = Pizza {crustSize = Medium, crustType = Thin, toppings = [Cheese]}
 -- now we want to add a single topping to the Pizza
 addTopping :: BaseProduct -> [Topping] -> BaseProduct
 addTopping p ts =
-  Pizza {crustSize = (crustSize p), crustType = (crustType p), toppings = newToppings}
+  Pizza {crustSize = crustSize p, crustType = crustType p, toppings = newToppings}
   where
-    newToppings = ts ++ (toppings p)
+    newToppings = ts ++ toppings p

@@ -1,16 +1,25 @@
-import Pizza (BaseProduct)
+import Pizza
 import System.IO
 
-data Customer = Customer {name :: String} deriving (Show)
+newtype Customer = Customer {name :: String} deriving (Show)
 
 data Order = Order
   { customer :: Customer,
-    pizzas :: [BaseProduct]
+    items :: [BaseProduct]
   }
   deriving (Show)
 
-createEmptyOrder :: Order
-createEmptyOrder = Order {customer = Customer "foo", pizzas = []}
+anEmptyOrder :: Order
+anEmptyOrder = Order {customer = Customer "no name", items = []}
+
+basicPizza :: BaseProduct
+basicPizza = Pizza {crustSize = Medium, crustType = Thin, toppings = [Cheese]}
+
+superPizza :: BaseProduct
+superPizza = Pizza {crustSize = Large, crustType = Thin, toppings = [Cheese, Onions, Mushrooms]}
+
+supremePizza :: BaseProduct
+supremePizza = Pizza {crustSize = Large, crustType = Thin, toppings = [Cheese, Onions, Mushrooms, Sausage, Pepperoni]}
 
 ---------------
 --  MAIN
@@ -23,12 +32,13 @@ main = do
   line <- getLine
   case line of
     "1" -> do
-      let order = createEmptyOrder
+      let order = anEmptyOrder
       finishedOrder <- buildOrder order
+      putStrLn "Items Order \n"
+      print (items finishedOrder)
+      putStrLn "No of Items\n"
+      print (length (items finishedOrder))
       print finishedOrder
-      main
-
-
       main
     _ -> exit
 
@@ -39,22 +49,36 @@ main = do
 exit :: IO ()
 exit = do putStrLn "exiting Pizza POS"
 
+------------------------
+--  addPizzaToOrder
+------------------------
+addPizzaToOrder :: Order -> BaseProduct -> Order
+addPizzaToOrder order item =
+  Order {customer = customer order, items = itemList}
+  where
+    itemList = item : items order -- add  pizzas to list
+
 ---------------
---  buildOrder
+--  buildOrder or
+--  calls addPizzaToOder which adds pizza to pizzas list
+-- start with empty list (anEmptyOrder)
 ---------------
 
 buildOrder :: Order -> IO Order
 buildOrder orderIn = do
   putStrLn "\n Build Order"
-  putStrLn "1 - New Pizza\n2 - Customer\n r - Return"
-  line <- getLine 
-  case line of 
+  putStrLn "1 - Add Pizza To Order\n2 - Customer\n r - Return"
+  line <- getLine
+  case line of
     "1" -> do
-      putStrLn "Cools lets make your Pizza"
-      let order = orderIn
+      -- putStrLn "Cool - Choose your Pizza from the List"
+      let order = addPizzaToOrder orderIn basicPizza
       buildOrder order
-
     -- "2" -> do
     --   putStrLn "I see you are new"
     "r" -> return orderIn
-    _   -> return orderIn
+    _ -> return orderIn
+
+---------------
+--  choosePizza
+---------------
