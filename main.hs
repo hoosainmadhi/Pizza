@@ -32,13 +32,20 @@ main = do
   line <- getLine
   case line of
     "1" -> do
-      let order = anEmptyOrder
-      finishedOrder <- buildOrder order
-      putStrLn "Items Order \n"
-      print (items finishedOrder)
-      putStrLn "No of Items\n"
-      print (length (items finishedOrder))
-      print finishedOrder
+      displayMenu
+      -- run function that will display the menu:
+      -- 1. Basic Pizza
+      -- 2. Super Pizza
+      -- 3. Supreme Pizza
+      -- 4. Breadsticks
+      -- 5. SoftDrinks
+      -- let order = anEmptyOrder
+      -- finishedOrder <- buildOrder order
+      -- putStrLn "Items Order \n"
+      -- print (items finishedOrder)
+      -- putStrLn "No of Items\n"
+      -- print (length (items finishedOrder))
+      -- print finishedOrder
       main
     _ -> exit
 
@@ -48,6 +55,12 @@ main = do
 
 exit :: IO ()
 exit = do putStrLn "exiting Pizza POS"
+
+------------------
+--  mainMenu :: IO ()
+------------------
+mainMenu :: IO ()
+mainMenu = do main
 
 ------------------------
 --  addPizzaToOrder
@@ -71,14 +84,27 @@ buildOrder orderIn = do
   line <- getLine
   case line of
     "1" -> do
-      -- putStrLn "Cool - Choose your Pizza from the List"
-      let order = addPizzaToOrder orderIn basicPizza
+      let order = addPizzaToOrder orderIn superPizza
+
       buildOrder order
     -- "2" -> do
     --   putStrLn "I see you are new"
     "r" -> return orderIn
     _ -> return orderIn
 
----------------
---  choosePizza
----------------
+-- displayMenu :: IO BaseProduct
+displayMenu :: IO ()
+displayMenu = do
+  putStrLn "\n Menu"
+  putStrLn "1 - Basic\n2 - Super\n 3 - Supreme\nr - Return"
+  line <- getLine
+  case line of
+    "1" -> do
+      print basicPizza
+    "2" -> do
+      print superPizza
+    "3" -> do
+      print supremePizza
+    "r" -> do
+      displayMenu
+    _ -> mainMenu
