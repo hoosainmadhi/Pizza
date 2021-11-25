@@ -9,6 +9,13 @@ data Order = Order
   }
   deriving (Show)
 
+orderToString :: Order -> String
+orderToString Order {customer = c, items = p} =
+  "Customer: " ++ show c ++ ", Pizzas: " ++ show p
+
+printOrder :: Order -> IO ()
+printOrder order = do putStrLn (orderToString order)
+
 emptyOrder :: Order
 emptyOrder = Order {customer = Customer "no name", items = []}
 
@@ -28,15 +35,21 @@ supremePizza = Pizza {crustSize = Large, crustType = Thin, toppings = [Cheese, O
 
 main :: IO ()
 main = do
-  putStrLn "\n --- MAIN ---"
-  putStrLn "1- New Order\n q - Quit"
+  putStrLn "\n --- Welcome to Hazkell's Pizzas ---"
+  putStrLn "1- View Menu\nq - Quit"
   line <- getLine
   case line of
     "1" -> do
       menuItem <- displayMenu
-      let order = emptyOrder
-      finishedOrder <- buildOrder menuItem order
-      print finishedOrder
+      -- putStrLn "Your Order:"
+      -- printOrder emptyOrder
+      -- menuItem <- displayMenu
+      let order = addPizzaToOrder emptyOrder menuItem
+      printOrder order
+      displayMenu
+      -- let order = emptyOrder
+      -- finishedOrder <- buildOrder menuItem order
+      -- print finishedOrder
       main
     _ -> exit
 
@@ -70,35 +83,45 @@ addPizzaToOrder order item =
 
 buildOrder :: BaseProduct -> Order -> IO Order
 buildOrder menuItem orderIn = do
-  putStrLn "\n Build Order"
-  putStr "1 - Add Menu ItemTo Order\n2 - Return to Menu \nr - Return"
+  putStrLn "\n"
+  putStrLn "1 - Add Menu Item To Order\n2 - Return to Menu \nr - Return"
   print menuItem
   line <- getLine
   case line of
     "1" -> do
       let order = addPizzaToOrder orderIn menuItem
       buildOrder menuItem order
-    -- "2" -> do
-
     "r" -> return orderIn
     _ -> return orderIn
 
 displayMenu :: IO BaseProduct
 displayMenu = do
-  putStrLn "\n Menu"
-  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks\n - Return"
+  putStrLn "\n--- Choose and Item ---"
+  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks\nr - Return"
   line <- getLine
   case line of
     "1" -> do
       return basicPizza
+      displayMenu
     "2" -> do
       return superPizza
+    -- displayMenu
     "3" -> do
       return supremePizza
+    -- displayMenu
     "4" -> do
       return SoftDrink
+    -- displayMenu
     "5" -> do
       return Breadsticks
+    -- displayMenu
     "r" -> do
       displayMenu
     _ -> displayMenu
+
+-- orderToString :: Order -> String
+-- orderToString (Order {customer = c , pizzas = p}) =
+--   "Customer:" ++ show c ++ ", Pizzas: " ++  show p
+
+takeOrder :: IO BaseProduct
+takeOrder = displayMenu
