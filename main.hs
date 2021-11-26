@@ -41,13 +41,7 @@ main = do
   case line of
     "1" -> do
       menuItem <- displayMenu
-      -- putStrLn "Your Order:"
-      -- printOrder emptyOrder
-      -- menuItem <- displayMenu
-      let order = addPizzaToOrder emptyOrder menuItem
-      -- printOrder order
-      -- displayMenu
-      -- let order = emptyOrder
+      let order = emptyOrder
       finishedOrder <- buildOrder menuItem order
       print finishedOrder
       main
@@ -84,8 +78,10 @@ addPizzaToOrder order item =
 buildOrder :: BaseProduct -> Order -> IO Order
 buildOrder menuItem orderIn = do
   putStrLn "\n"
-  putStrLn "1 - Add Another Item To Order\n2 - Return to Menu \nr - Return"
+  putStrLn "1 - Add Another Item To Order\nr - print order"
+
   print menuItem
+  putStrLn "has been added to your order"
   line <- getLine
   case line of
     "1" -> do
