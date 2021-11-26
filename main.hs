@@ -5,29 +5,14 @@ newtype Customer = Customer {name :: String} deriving (Show)
 
 data Order = Order
   { customer :: Customer,
-    items :: [BaseProduct]
+    items :: [Products]
   }
   deriving (Show)
 
-orderToString :: Order -> String
-orderToString Order {customer = c, items = p} =
-  "Your Order is as follows-> " ++ "Customer: " ++ show c ++ ", Pizzas: " ++ show p
-
-printOrder :: Order -> IO ()
-printOrder order = do putStrLn (orderToString order)
+data MenuAction = Choice Products | Back
 
 emptyOrder :: Order
 emptyOrder = Order {customer = Customer "no name", items = []}
-
--- Menu Offerings
-basicPizza :: BaseProduct
-basicPizza = Pizza {crustSize = Medium, crustType = Thin, toppings = [Cheese]}
-
-superPizza :: BaseProduct
-superPizza = Pizza {crustSize = Large, crustType = Thin, toppings = [Cheese, Onions, Mushrooms]}
-
-supremePizza :: BaseProduct
-supremePizza = Pizza {crustSize = Large, crustType = Thin, toppings = [Cheese, Onions, Mushrooms, Sausage, Pepperoni]}
 
 ---------------
 --  MAIN
@@ -40,12 +25,80 @@ main = do
   line <- getLine
   case line of
     "1" -> do
-      menuItem <- displayMenu
+      Choice menuItem <- displayMenu
       let order = emptyOrder
-      finishedOrder <- buildOrder menuItem order
-      print finishedOrder
+      finishedOrder <- buildOrder order menuItem
+      printOrder finishedOrder
       main
     _ -> exit
+
+------------------------
+--  addPizzaToOrder
+------------------------
+addPizzaToOrder :: Order -> Products -> Order
+addPizzaToOrder order item =
+  Order {customer = customer order, items = itemList}
+  where
+    itemList = item : items order -- add  pizzas to list
+
+------------------------
+--  buildOrder
+------------------------
+
+buildOrder :: Order -> Products -> IO Order
+buildOrder orderIn menuItem = do
+  putStrLn "\n"
+  print menuItem
+  putStrLn "1 - Add and Choose Another Item\nr - print order"
+  
+  line <- getLine
+  case line of
+    "1" -> do
+      Choice menuItem <- displayMenu
+      let order = addPizzaToOrder orderIn menuItem
+      buildOrder order menuItem
+      
+    "r" -> return orderIn
+    _ -> return orderIn
+
+------------------
+--  displayMenu ()
+------------------
+
+displayMenu :: IO MenuAction
+displayMenu = do
+  putStrLn "\n--- Choose and Item ---"
+  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks\nr - Return"
+  line <- getLine
+  case line of
+    "1" -> do
+      return $ Choice basicPizza
+    "2" -> do
+      return $ Choice superPizza
+    "3" -> do
+      return $ Choice supremePizza
+    "4" -> do
+      return $ Choice SoftDrink
+    "5" -> do
+      return $ Choice Breadsticks
+    "r" -> do
+      return Back
+    _ -> return Back
+
+------------------
+--  orderToString
+------------------
+
+orderToString :: Order -> String
+orderToString Order {customer = c, items = p} =
+  "Your Order is as follows" ++ "Customer: " ++ show c ++ ", Pizzas: " ++ show p
+
+------------------
+--  printOrder
+------------------
+
+printOrder :: Order -> IO ()
+printOrder order = do putStrLn (orderToString order)
 
 ------------------
 --  exit :: IO ()
@@ -53,72 +106,3 @@ main = do
 
 exit :: IO ()
 exit = do putStrLn "exiting Pizza POS"
-
-------------------
---  mainMenu :: IO ()
-------------------
-mainMenu :: IO ()
-mainMenu = do main
-
-------------------------
---  addPizzaToOrder
-------------------------
-addPizzaToOrder :: Order -> BaseProduct -> Order
-addPizzaToOrder order item =
-  Order {customer = customer order, items = itemList}
-  where
-    itemList = item : items order -- add  pizzas to list
-
----------------
---  buildOrder or
---  calls addPizzaToOder which adds pizza to pizzas list
--- start with empty list (anEmptyOrder)
----------------
-
-buildOrder :: BaseProduct -> Order -> IO Order
-buildOrder menuItem orderIn = do
-  putStrLn "\n"
-  putStrLn "1 - Add Another Item To Order\nr - print order"
-
-  print menuItem
-  putStrLn "has been added to your order"
-  line <- getLine
-  case line of
-    "1" -> do
-      menuItem <- displayMenu
-      let order = addPizzaToOrder orderIn menuItem
-      buildOrder menuItem order
-    "r" -> return orderIn
-    _ -> return orderIn
-
-displayMenu :: IO BaseProduct
-displayMenu = do
-  putStrLn "\n--- Choose and Item ---"
-  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks\nr - Return"
-  line <- getLine
-  case line of
-    "1" -> do
-      return basicPizza
-    -- displayMenu
-    "2" -> do
-      return superPizza
-    -- displayMenu
-    "3" -> do
-      return supremePizza
-    -- displayMenu
-    "4" -> do
-      return SoftDrink
-    -- displayMenu
-    "5" -> do
-      return Breadsticks
-    -- displayMenu
-    "r" -> do
-      displayMenu
-    _ -> displayMenu
-
--- orderToString :: Order -> String
--- orderToString (Order {customer = c , pizzas = p}) =
---   "Customer:" ++ show c ++ ", Pizzas: " ++  show p
-
-takeOrder :: IO BaseProduct
-takeOrder = displayMenu

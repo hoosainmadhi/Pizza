@@ -6,7 +6,7 @@ data CrustType = Thin | Thick | Regular deriving (Show)
 
 data CrustSize = Small | Medium | Large deriving (Show)
 
-data BaseProduct
+data Products
   = Pizza
       { crustSize :: CrustSize,
         crustType :: CrustType,
@@ -17,11 +17,22 @@ data BaseProduct
   deriving (Show)
 
 -- basic define a pizza instance:
-pizza :: BaseProduct
+pizza :: Products
 pizza = Pizza {crustSize = Medium, crustType = Thin, toppings = [Cheese]}
 
+-- Menu Offerings
+
+basicPizza :: Products
+basicPizza = Pizza {crustSize = Medium, crustType = Thin, toppings = [Cheese]}
+
+superPizza :: Products
+superPizza = Pizza {crustSize = Large, crustType = Thin, toppings = [Cheese, Onions, Mushrooms]}
+
+supremePizza :: Products
+supremePizza = Pizza {crustSize = Large, crustType = Thin, toppings = [Cheese, Onions, Mushrooms, Sausage, Pepperoni]}
+
 -- now we want to add a single topping to the Pizza
-addTopping :: BaseProduct -> [Topping] -> BaseProduct
+addTopping :: Products -> [Topping] -> Products
 addTopping p ts =
   Pizza {crustSize = crustSize p, crustType = crustType p, toppings = newToppings}
   where
