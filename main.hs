@@ -11,6 +11,8 @@ data Order = Order
 
 data MenuAction = Choice Products | Back
 
+type Back = Order
+
 emptyOrder :: Order
 emptyOrder = Order {customer = Customer "no name", items = []}
 
@@ -25,7 +27,7 @@ main = do
   line <- getLine
   case line of
     "1" -> do
-      Choice menuItem <- displayMenu
+      Just menuItem <- displayMenu
       let order = emptyOrder
       finishedOrder <- buildOrder order menuItem
       printOrder finishedOrder
@@ -50,14 +52,13 @@ buildOrder orderIn menuItem = do
   putStrLn "\n"
   print menuItem
   putStrLn "1 - Add and Choose Another Item\nr - print order"
-  
+
   line <- getLine
   case line of
     "1" -> do
-      Choice menuItem <- displayMenu
+      Just menuItem <- displayMenu
       let order = addPizzaToOrder orderIn menuItem
       buildOrder order menuItem
-      
     "r" -> return orderIn
     _ -> return orderIn
 
@@ -65,25 +66,23 @@ buildOrder orderIn menuItem = do
 --  displayMenu ()
 ------------------
 
-displayMenu :: IO MenuAction
+displayMenu :: IO (Maybe Products)
 displayMenu = do
   putStrLn "\n--- Choose and Item ---"
-  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks\nr - Return"
+  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks"
   line <- getLine
   case line of
     "1" -> do
-      return $ Choice basicPizza
+      return $ Just basicPizza
     "2" -> do
-      return $ Choice superPizza
+      return $ Just superPizza
     "3" -> do
-      return $ Choice supremePizza
+      return $ Just supremePizza
     "4" -> do
-      return $ Choice SoftDrink
+      return $ Just SoftDrink
     "5" -> do
-      return $ Choice Breadsticks
-    "r" -> do
-      return Back
-    _ -> return Back
+      return $ Just Breadsticks
+    _ -> return Nothing
 
 ------------------
 --  orderToString
