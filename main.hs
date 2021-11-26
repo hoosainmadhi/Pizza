@@ -11,7 +11,7 @@ data Order = Order
 
 orderToString :: Order -> String
 orderToString Order {customer = c, items = p} =
-  "Customer: " ++ show c ++ ", Pizzas: " ++ show p
+  "Your Order is as follows-> " ++ "Customer: " ++ show c ++ ", Pizzas: " ++ show p
 
 printOrder :: Order -> IO ()
 printOrder order = do putStrLn (orderToString order)
@@ -45,11 +45,11 @@ main = do
       -- printOrder emptyOrder
       -- menuItem <- displayMenu
       let order = addPizzaToOrder emptyOrder menuItem
-      printOrder order
-      displayMenu
+      -- printOrder order
+      -- displayMenu
       -- let order = emptyOrder
-      -- finishedOrder <- buildOrder menuItem order
-      -- print finishedOrder
+      finishedOrder <- buildOrder menuItem order
+      print finishedOrder
       main
     _ -> exit
 
@@ -84,11 +84,12 @@ addPizzaToOrder order item =
 buildOrder :: BaseProduct -> Order -> IO Order
 buildOrder menuItem orderIn = do
   putStrLn "\n"
-  putStrLn "1 - Add Menu Item To Order\n2 - Return to Menu \nr - Return"
+  putStrLn "1 - Add Another Item To Order\n2 - Return to Menu \nr - Return"
   print menuItem
   line <- getLine
   case line of
     "1" -> do
+      menuItem <- displayMenu
       let order = addPizzaToOrder orderIn menuItem
       buildOrder menuItem order
     "r" -> return orderIn
@@ -102,7 +103,7 @@ displayMenu = do
   case line of
     "1" -> do
       return basicPizza
-      displayMenu
+    -- displayMenu
     "2" -> do
       return superPizza
     -- displayMenu
