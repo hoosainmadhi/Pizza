@@ -1,3 +1,4 @@
+import Data.Maybe (isNothing)
 import Pizza
 import System.IO
 
@@ -28,7 +29,7 @@ main = do
   case line of
     "1" -> do
       Just menuItem <- displayMenu
-      let order = emptyOrder
+      let order = addPizzaToOrder emptyOrder menuItem
       finishedOrder <- buildOrder order menuItem
       printOrder finishedOrder
       main
@@ -51,7 +52,7 @@ buildOrder :: Order -> Products -> IO Order
 buildOrder orderIn menuItem = do
   putStrLn "\n"
   print menuItem
-  putStrLn "1 - Add and Choose Another Item\nr - print order"
+  putStrLn "1 - Choose Another Item\nr - print order"
 
   line <- getLine
   case line of
@@ -69,7 +70,7 @@ buildOrder orderIn menuItem = do
 displayMenu :: IO (Maybe Products)
 displayMenu = do
   putStrLn "\n--- Choose and Item ---"
-  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks"
+  putStrLn "1 - Basic\n2 - Super\n3 - Supreme\n4 - SoftDrink\n5 - Breadsticks\nr - Return"
   line <- getLine
   case line of
     "1" -> do
@@ -82,6 +83,7 @@ displayMenu = do
       return $ Just SoftDrink
     "5" -> do
       return $ Just Breadsticks
+    "r" -> return Nothing
     _ -> return Nothing
 
 ------------------
