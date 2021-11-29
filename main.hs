@@ -10,10 +10,6 @@ data Order = Order
   }
   deriving (Show)
 
-data MenuAction = Choice Products | Back
-
-type Back = Order
-
 emptyOrder :: Order
 emptyOrder = Order {customer = Customer "no name", items = []}
 
@@ -31,7 +27,6 @@ main = do
       Just menuItem <- displayMenu
       let order = addPizzaToOrder emptyOrder menuItem
       finishedOrder <- buildOrder order menuItem
-      printOrder finishedOrder
       main
     _ -> exit
 
@@ -50,9 +45,10 @@ addPizzaToOrder order item =
 
 buildOrder :: Order -> Products -> IO Order
 buildOrder orderIn menuItem = do
-  putStrLn "\n"
-  print menuItem
-  putStrLn "1 - Choose Another Item\nr - print order"
+  putStrLn "Your Order is as follows:\n"
+  print orderIn
+  putStrLn "--- buildOrder ---"
+  putStrLn "1 - Choose Another Item\nr - Return"
 
   line <- getLine
   case line of
